@@ -1,4 +1,6 @@
 #BLOG.md
+Number of hours spent: **7 hours**
+
 Demo page: [http://103.47.192.73:3000/posts](http://103.47.192.73:3000/posts)
 
 ##Run

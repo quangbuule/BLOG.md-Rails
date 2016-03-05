@@ -6,6 +6,11 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all.order(created_at: :desc)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @posts.to_json(methods: :body_html) }
+    end
   end
 
   # GET /posts/1
@@ -30,7 +35,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+        format.json { render :show, status: :created, location: @post, json: @post.to_json(methods: :body_html) }
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }

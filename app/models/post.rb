@@ -20,4 +20,9 @@ class Post < ActiveRecord::Base
 
     markdown.render(self.body).html_safe
   end
+
+  def as_json(options={})
+    logger.debug("HAHA")
+    super(options.merge(methods: [:body_html]))
+  end
 end

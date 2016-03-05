@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BLOGMdRails</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="root"></div>
+  <%= yield %>
+  <script>
+    window.Images = {
+      blogger: "<%= image_path('Blogger.png') %>",
+      avatar: "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/10455399_859011110823391_1064105303754390977_n.jpg?oh=6a093c40738378c06fb6b7f9cd1b975f&oe=57509ACE&__gda__=1464558919_547ecc674b2c36cdf5a6777901ab9ea8"
+    };
+  </script>
+  <script charset="utf-8">
+  <% if ENV["RAILS_ENV"] == "production" %>
+      var script = "/application.js";
+  <% else %>
+      console.warn("Development mode. Make sure to start 'node devServer.js'");
+      var script = "http://" + (location.host || 'localhost').split(':')[0] + ":3010/application.js"
+  <% end %>
+  document.write('<script src="' + script + '"></' + 'script>');
+  </script>
+</body>
+</html>

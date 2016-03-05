@@ -16,7 +16,7 @@
   </script>
   <script charset="utf-8">
   <% if ENV["RAILS_ENV"] == "production" %>
-      var script = "/application.js";
+      var script = "<%= javascript_path('application.js') %>";
   <% else %>
       console.warn("Development mode. Make sure to start 'node devServer.js'");
       var script = "http://" + (location.host || 'localhost').split(':')[0] + ":3010/application.js"

@@ -1,7 +1,11 @@
 import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
+import qs from 'qs';
 const { Images } = window;
 
 import {
+  Button,
+  Input,
   Navbar,
   Nav,
   NavItem,
@@ -21,6 +25,7 @@ export default class AppNavBar extends React.Component {
 
     this.transitionToPostIndexPage = ::this.transitionToPostIndexPage;
     this.transitionToPostNewPage = ::this.transitionToPostNewPage;
+    this.handleSearchFormSubmit = ::this.handleSearchFormSubmit;
   }
 
   render() {
@@ -52,6 +57,17 @@ export default class AppNavBar extends React.Component {
               {' '}New blog post
             </NavItem>
           </Nav>
+          <Navbar.Form pullLeft>
+            <form onSubmit={this.handleSearchFormSubmit}>
+              <Input
+                type="text"
+                placeholder="Search"
+                hasFeedback
+                style={styles.searchInput}
+                feedbackIcon={<Glyphicon glyph="search" />}
+              />
+          </form>
+          </Navbar.Form>
           <Nav style={styles.user}>
             <NavItem eventKey={2} href="#">
               <span>Quangbuu Le</span>
@@ -71,6 +87,12 @@ export default class AppNavBar extends React.Component {
   transitionToPostNewPage(e) {
     e.preventDefault();
     this.context.router.push('/posts/new');
+  }
+
+  handleSearchFormSubmit(e) {
+    e.preventDefault();
+    const q = findDOMNode(e.target).querySelector('input').value;
+    this.context.router.push(`/posts?${qs.stringify({ q })}`);
   }
 }
 
@@ -97,6 +119,10 @@ const styles = {
   brandName: {
     marginLeft: 12,
     fontWeight: 'normal'
+  },
+
+  searchInput: {
+    borderRadius: 17
   },
 
   user: {

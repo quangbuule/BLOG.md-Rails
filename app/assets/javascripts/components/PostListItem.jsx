@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import {
   Button,
-  Glyphicon
+  Glyphicon,
+  Modal
 } from 'react-bootstrap';
 
 import PostEditor from './PostEditor';
@@ -46,7 +47,7 @@ export default class PostListItem extends React.Component {
           </div>
         </section>
         {!editMode ?
-          <section>
+          <section className="post">
             <div style={styles.postTitle}>{post.title}</div>
             <div style={styles.postBody} dangerouslySetInnerHTML={{
               __html: post['body_html'] || post['body']
@@ -120,6 +121,9 @@ export const styles = {
   },
 
   postBody: {
+    fontFamily: `Georgia, Times, 'Times New Roman', serif`,
+    fontSize: 18,
+    fontWeight: 100
   },
 
   actionButtons: {

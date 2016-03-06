@@ -5,7 +5,16 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.order(created_at: :desc)
+    q = request.query_parameters[:q]
+
+    if q
+      @posts = Post.where("title LIKE :query", query: "%#{q}%").order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
+
+
+    logger.debug(q)
 
     respond_to do |format|
       format.html { render :index }
@@ -46,7 +55,6 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    logger.debug(post_params)
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }

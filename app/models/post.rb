@@ -22,7 +22,6 @@ class Post < ActiveRecord::Base
   end
 
   def as_json(options={})
-    logger.debug("HAHA")
     super(options.merge(methods: [:body_html]))
   end
 end

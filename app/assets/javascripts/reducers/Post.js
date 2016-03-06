@@ -1,7 +1,8 @@
 const initialState = {
   entities: {},
   collections: {
-    trending: []
+    trending: [],
+    searchResult: []
   }
 };
 
@@ -18,7 +19,7 @@ export default function (state = initialState, action) {
 
   case '@@post/GET':
     if (action.asyncState === '@@asyncState/SUCCESS') {
-      const { posts } = action;
+      const { postCollectionId = 'trending', posts } = action;
 
       posts.forEach(post => {
         state.entities[post.id] = post;
@@ -29,7 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         collections: {
           ...state.collections,
-          trending: posts.map(p => p.id)
+          [postCollectionId]: posts.map(p => p.id)
         }
       };
     }
@@ -59,8 +60,8 @@ export default function (state = initialState, action) {
     state = {
       ...state,
       collections: {
-        ...state.collections,
-        trending: state.collections['trending'].filter(id => id !== postId)
+        trending: state.collections.trending.filter(id => id !== postId),
+        searchResult: state.collections.searchResult.filter(id => id !== postId)
       }
     };
   }

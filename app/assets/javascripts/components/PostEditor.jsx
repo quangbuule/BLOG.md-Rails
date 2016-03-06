@@ -4,7 +4,8 @@ import request from 'superagent';
 
 import {
   Button,
-  Glyphicon
+  Glyphicon,
+  Modal
 } from 'react-bootstrap';
 import Textarea from 'react-textarea-autosize';
 
@@ -43,15 +44,19 @@ export default class PostEditor extends React.Component {
     this.handleCancelButtonClick = ::this.handleCancelButtonClick;
     this.handleOkButtonClick = ::this.handleOkButtonClick;
 
+    this.cancelDelete = ::this.cancelDelete;
+    this.confirmDelete = ::this.confirmDelete;
+
     this.state = {
       post: this.props.post,
-      processing: false
+      processing: false,
+      confirmDeleteModalShow: false
     };
   }
 
   render() {
     const { newPost } = this.props;
-    const { post, processing } = this.state;
+    const { post, processing, confirmDeleteModalShow } = this.state;
 
     return (
       <div>
@@ -106,6 +111,16 @@ export default class PostEditor extends React.Component {
               {newPost ? 'Post' : 'Update'}
           </Button>
         </section>
+        <Modal show={confirmDeleteModalShow} onHide={this.cancelDelete }>
+          <Modal.Body>
+            <h4>Are you sure want to delete this post?</h4>
+            <p>You can't undo this</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.confirmDelete}>Delete</Button>
+            <Button onClick={this.cancelDelete} bsStyle="primary">Cancel</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -137,6 +152,12 @@ export default class PostEditor extends React.Component {
   }
 
   handleDeleteButtonClick() {
+    this.setState({
+      confirmDeleteModalShow: true
+    });
+  }
+
+  confirmDelete() {
     const { post } = this.state;
 
     this.setState({ processing: true });
@@ -149,8 +170,14 @@ export default class PostEditor extends React.Component {
           type: '@@post/DELETE',
           postId: post.id
         });
-        this.props.onDelete();
+        // this.props.onDelete();
       });
+  }
+
+  cancelDelete() {
+    this.setState({
+      confirmDeleteModalShow: false
+    });
   }
 
   handleCancelButtonClick() {

@@ -11,7 +11,7 @@ export default class Profile extends React.Component {
         <div className="container">
           <div style={styles.innerWrapper}>
             <div style={styles.infoWrapper}>
-              <h2>Quangbuu Le</h2>
+              <h2 style={styles.profileName}>Quangbuu Le</h2>
               <div style={styles.bref}>
                 Software Engineer, Vietnam.
               </div>
@@ -41,6 +41,10 @@ const styles = {
 
   infoWrapper: {
     flex: 1
+  },
+
+  profileName: {
+    fontWeight: 100
   },
 
   bref: {
